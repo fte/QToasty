@@ -148,8 +148,17 @@ function QToasty(params = {}) {
         imageEl.style.right = -size + 'px';
         options.domElement.appendChild(container);
         
-        if (options.sound) soundEl.play();
-        
+        if (options.sound) {
+          soundEl
+            .play()
+            .then(() => {
+              // console.info("Autoplay started!");
+              soundEl.play();
+            })
+            .catch((error) => {
+              // console.error("Error during autoplay attempt:", error);
+            });
+        }
         
         animate(imageEl, {name: 'right', value: '+=' + size + 'px'}, {
             duration: options.slideInSpeed,
